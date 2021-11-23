@@ -23,7 +23,8 @@ def data():
         strdate = request.form.get('date')
         date = datetime.datetime.strptime(strdate, '%d/%m/%Y %H:%M')
         threshold = request.form.get('hours')
-        advice = getAdvice(ed, date.day, date.month, date.year, threshold);
+        advice = getAdvice(ed, date.day, date.month, date.year, float(threshold));
+        print(advice)
         return render_template('results.html', advice =advice)
 
 if __name__ == "__main__":

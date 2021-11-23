@@ -25,9 +25,9 @@
                </thead>
                <tbody>
                     {% for ed in advice:%}
-                         {% for p in ed[1]:%}
+                         {% for x in ed[1:]:%}
                          <tr>
-                              <td>{{ed[0]}}</td><td>{{p[0]}}</td><td>{{p[1]}}</td><td>{{p[2]}}</td>
+                              <td>{{ed[0]}}</td><td>{%print(x[0])%}</td><td>{%print(x[1])%}</td><td>{%print(x[2])%}</td>
                          </tr>
                          {% endfor %}
 
