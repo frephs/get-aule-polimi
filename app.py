@@ -23,9 +23,12 @@ def data():
         strdate = request.form.get('date')
         date = datetime.datetime.strptime(strdate, '%d/%m/%Y %H:%M')
         threshold = request.form.get('hours')
-        advice = getAdvice(ed, date.day, date.month, date.year, float(threshold));
+        try:
+            advice = getAdvice(ed, date.day, date.month, date.year, float(threshold));
+        except Exception as e:
+            return render_template('error.html', e=e)
         print(advice)
         return render_template('results.html', advice =advice)
 
 if __name__ == "__main__":
-    app.run()
+    app.run(host="0.0.0.0")
