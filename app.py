@@ -29,7 +29,7 @@ def data():
         date = datetime.datetime.strptime(strdate, '%d/%m/%Y %H:%M')
         threshold = request.form.get('hours')
         try:
-            advice = getAdvice(ed, date.day, date.month, date.year, float(threshold));
+            return render_template('results.html', advice=getAdvice(ed, date.day, date.month, date.year, float(threshold)))
         except Exception as e:
             return render_template('error.html', e=e)
         print(advice)
