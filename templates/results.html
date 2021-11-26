@@ -17,119 +17,24 @@
             integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
             crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" charset="utf-8"></script>
-
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+          rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script>
-        let positions = {
-            "1": [282 / 1012, 476 / 1012],
-            "2": [263 / 1012, 371 / 1012],
-            "3": [263 / 1012, 557 / 1012],
-            "4": [339 / 1012, 377 / 1012],
-            "5": [339 / 1012, 572 / 1012],
-            "6": [375 / 1012, 478 / 1012],
-            "7": [423 / 1012, 483 / 1012],
-            "8": [419 / 1012, 398 / 1012],
-            "9": [413 / 1012, 576 / 1012],
-            "10": [447 / 1012, 351 / 1012],
-            "11": [227 / 1012, 263 / 1012],
-            "12": [275 / 1012, 306 / 1012],
-            "13": [319 / 1012, 257 / 1012],
-            "14": [384 / 1012, 264 / 1012],
-            "15": [425 / 1012, 311 / 1012],
-            "19": [558 / 1012, 400 / 1012],
-            "20": [662 / 1012, 412 / 1012],
-            "21": [776 / 1012, 368 / 1012],
-            "22": [844 / 1012, 498 / 1012],
-            "23": [867 / 1012, 522 / 1012],
-            "24": [844 / 1012, 556 / 1012],
-            "25": [882 / 1012, 552 / 1012],
-            "26": [854 / 1012, 631 / 1012],
-            "29": [175 / 1012, 638 / 1012],
-        };
-
-        let mapOpen = true;
-        let onlyMap = false;
-        let lastPosition = null;
-
-        function adjustCircle() {
-            let circle = $(".circle");
-            if (lastPosition != null) {
-                let mapWidth = $("#map-1").width();
-                circle.css("left", mapWidth * lastPosition[0] - 30 + "px");
-                circle.css("top", mapWidth * lastPosition[1] - 30 + "px");
-            }
-        }
-
-        window.onresize = () => {
-            mapOpen = $("#map").is(":visible");
-            $("#open").text(mapOpen ? "Chiudi mappa" : "Apri mappa");
-        }
-        window.onload = () => {
-            mapOpen = $("#map").is(":visible");
-            $("#open").text(mapOpen ? "Chiudi mappa" : "Apri mappa");
-            $(".circle").hide().css("opacity", "0");
-            $("#open").click(() => {
-                if (!onlyMap) {
-                    mapOpen = !mapOpen;
-                    $("#open").text(mapOpen ? "Chiudi mappa" : "Apri mappa");
-                    if (mapOpen) {
-                        $("#map").show();
-                    } else {
-                        $("#map").hide();
-                    }
-                } else {
-                    $("#open").text(mapOpen ? "Chiudi mappa" : "Apri mappa");
-                    $("#table-container").show();
-                    if (mapOpen) {
-                        $("#map").show();
-                    } else {
-                        $("#map").hide();
-                    }
-                    onlyMap = false;
-                }
-            })
-            $("tr").mouseenter((ev) => {
-                let numbers = /^[0-9]+/.exec($($(ev.target).parent().children()[0]).text());
-                let circle = $(".circle");
-                if (numbers != null) {
-                    let number = numbers[0];
-                    let position = positions[number];
-                    if (position != null) {
-                        lastPosition = position;
-                        adjustCircle();
-                        circle.show();
-                        circle.css("opacity", "1");
-                    } else {
-                        lastPosition = null;
-                        circle.hide();
-                        circle.css("opacity", "0");
-                    }
-                } else {
-                    circle.hide();
-                    circle.css("opacity", "0");
-                }
-            })
-            $("tr").click((ev) => {
-                $("#table-container").hide();
-                $("#map").show();
-                onlyMap = true;
-                adjustCircle();
-                $("#open").text("Chiudi mappa");
-
-            })
-        }
-
+        let map = {% print(location) %};
     </script>
-     <link rel="stylesheet" href='{{url_for('static', filename='css/style.css')}}'>
+    <script src="{{url_for('static', filename='scripts/results.js')}}" charset="utf-8"></script>
+    <link rel="stylesheet" href='{{url_for('static', filename='css/style.css')}}'>
     <title>GetAulePolimi</title>
 </head>
 <body>
 <div class="container pt-3">
-    <h1 id="title">GetAulePolimi<span id="open" class="btn btn-primary">Chiudi mappa</span></h1>
+    <h1 id="title"><span id="title-back" class="material-icons">arrow_back</span>GetAulePolimi<span id="open" class="btn btn-primary">Chiudi mappa</span></h1>
     <div id="container">
         <div id="table-container">
 
-            <table class="table table-sm table-hover">
+            <input id="search" autocomplete="off">
+            <table id="table" class="table table-sm table-hover">
                 <thead>
                 <tr>
                     <th scope="col">Aula</th>
@@ -154,11 +59,13 @@
         </div>
         <div id="map">
             <div id="map-1">
-                <img style="width: 1012px" src="{{ url_for('static', filename='img/leonardo.svg') }}"
+                <img style="width: 1012px" id="leo-map" src="{{ url_for('static', filename='img/leonardo.svg') }}"
                      class="img-fluid rounded border border-4 border-dark" alt="Leonardo">
                 <span class="circle"></span>
-                <img style="display: none" src="{{ url_for('static', filename='img/bovisa.svg') }}"
+                <img style="width: 1012px" id="bov-map" style="display: none"
+                     src="{{ url_for('static', filename='img/bovisa.svg') }}"
                      class="mt-3 mb-3 img-fluid rounded border border-4 border-dark" alt="La masa">
+                <span id="no-map" style="display: none">Nessuna mappa disponibile</span>
             </div>
         </div>
     </div>

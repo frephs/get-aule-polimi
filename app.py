@@ -1,5 +1,5 @@
 from edifici import edifici
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect
 import datetime
 from main import *
 import requests as r
@@ -14,13 +14,13 @@ def home():
 @app.route("/aule", methods = ['POST', 'GET'])
 def aule():
     t = datetime.datetime.now()
-    datestr = str(t.day)+ "/" + str(t.month)+ "/" + str(t.year)+ " " + str(t.hour) + ":" + str(t.minute);
+    datestr = str(t.day)+ "/" + str(t.month)+ "/" + str(t.year)+ " " + str(t.hour) + ":" + ("0" + str(t.minute))[-2:];
     return render_template('index.html', edifici=edifici, date=datestr)
 
 @app.route('/aule/results', methods = ['POST', 'GET'])
 def data():
     if request.method == 'GET':
-        return f"The URL /data is accessed directly. Try going to '/form' to submit form"
+        return redirect("/aule")
     if request.method == 'POST':
         form_data = request.form
         print(form_data)
@@ -28,12 +28,15 @@ def data():
         strdate = request.form.get('date')
         date = datetime.datetime.strptime(strdate, '%d/%m/%Y %H:%M')
         threshold = request.form.get('hours')
+        map = "0"
+        if (ed[:3] == "MIA"):
+            map = "1"
+        elif (ed[:3] == "MIB"):
+            map = "2"
         try:
-            return render_template('results.html', advice=getAdvice(ed, date.day, date.month, date.year, float(threshold)))
+            return render_template('results.html', advice=getAdvice(ed, date.day, date.month, date.year, float(threshold)), location = map)
         except Exception as e:
             return render_template('error.html', e=e)
-        print(advice)
-        return render_template('results.html', advice =advice)
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0")
