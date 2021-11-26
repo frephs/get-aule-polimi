@@ -18,9 +18,10 @@ body {
 }
 
 #open {
-   content: "Apri mappa";
-   float: right;
+   content: "map close";
    font-size: 20px;
+   height: 35px;
+   margin-left: 10px;
 }
 
 .container {
@@ -28,10 +29,14 @@ body {
    display: flex;
    flex-direction: column;
    padding: 20px;
-   margin: 0;
+   margin: auto;
    width: 100%;
-   max-width: none;
+   max-width: 1300px;
 
+}
+
+.material-icons {
+   user-select: none;
 }
 
 #table-container {
@@ -134,7 +139,25 @@ body {
 .button:hover {
    background-color: #5baeff;
 }
-
+#search-bar {
+   display: flex;
+   flex-direction: row;
+   align-items: center;
+   margin-bottom: 10px;
+}
+#search {
+   margin-left: 10px;
+   flex-grow: 1;
+   height: 35px;
+   padding-left: 10px;
+}
+#search-bar:nth-child(1) {
+   height: 24px;
+   margin-left: 5px;
+}
+.table th {
+   border-top: none;
+}
 #title {
    user-select: none;
 }

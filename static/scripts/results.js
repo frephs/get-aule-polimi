@@ -76,26 +76,24 @@ function adjustCircle() {
 
 window.onresize = () => {
     mapOpen = $("#map").is(":visible");
-    $("#open").text(mapOpen ? "Chiudi mappa" : "Apri mappa");
+    $("#open").text(onlyMap ? "map close" : (mapOpen ? "map arrow_forward" : "map arrow_back"));
 }
 window.onload = () => {
     mapOpen = $("#map").is(":visible");
     $("#title-back").click(() => {
         window.location.pathname = "/aule"
     })
-    $("#open").text(mapOpen ? "Chiudi mappa" : "Apri mappa");
+    $("#open").text(onlyMap ? "map close" : (mapOpen ? "map arrow_forward" : "map arrow_back"));
     $(".circle").hide().css("opacity", "0");
     $("#open").click(() => {
         if (!onlyMap) {
             mapOpen = !mapOpen;
-            $("#open").text(mapOpen ? "Chiudi mappa" : "Apri mappa");
             if (mapOpen) {
                 $("#map").show();
             } else {
                 $("#map").hide();
             }
         } else {
-            $("#open").text(mapOpen ? "Chiudi mappa" : "Apri mappa");
             $("#table-container").show();
             if (mapOpen) {
                 $("#map").show();
@@ -104,6 +102,7 @@ window.onload = () => {
             }
             onlyMap = false;
         }
+        $("#open").text(onlyMap ? "map close" : (mapOpen ? "map arrow_forward" : "map arrow_back"));
         adjustCircle();
     })
     $("#search").on("input", () => {
@@ -143,7 +142,7 @@ window.onload = () => {
         $("#map").show();
         onlyMap = true;
         adjustCircle();
-        $("#open").text("Chiudi mappa");
+        $("#open").text(onlyMap ? "map close" : (mapOpen ? "map arrow_forward" : "map arrow_back"));
         
     })
     
