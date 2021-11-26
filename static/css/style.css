@@ -39,7 +39,10 @@ body {
    border-bottom: solid 2px lightgray;
    padding: 5px;
    font-weight: 700;
+   margin-top: 10px;
 }
+
+
 thead {
    cursor: pointer;
    user-select: none;
@@ -267,4 +270,8 @@ thead {
    #container {
       flex-direction: column;
    }
+}
+
+.buildings:hover{
+     background-color: white !important;
 }
