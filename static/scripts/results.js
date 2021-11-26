@@ -19,6 +19,8 @@ let positionsLeo = {
     "13": [319 / 1012, 257 / 1012],
     "14": [384 / 1012, 264 / 1012],
     "15": [425 / 1012, 311 / 1012],
+    "16B": [273 / 1012, 257 / 1012],
+    "16C": [404 / 1012, 306 / 1012],
     "19": [558 / 1012, 400 / 1012],
     "20": [662 / 1012, 412 / 1012],
     "21": [776 / 1012, 368 / 1012],
@@ -59,6 +61,38 @@ let positionsBov = {
     "BL.27": [273 / 1074, (334 + 20) / 1074],
     "BL.28": [273 / 1074, (395 + 20) / 1074],
     "B29": [32 / 1074, (639 + 20) / 1074],
+}
+let buildingsRooms = {
+    "2": ['EDUCAFE', '2.0.1', '2.1.3', '2.1.4', '2.1.5', '2.0.2', '2.1.2', '2.1.1', '2.2.1 - D.I.', '2.2.4', '2.2.2', '2.2.5 - D.I.', '2.2.3'],
+    "3": ['3.0.3', '3.0.1', 'OSVALDO DE DONATO', '3.0.2', 'A1', 'A2', 'LABORATORIO INFORMATICO', '3.1.3', '3.1.4', '3.1.1', '3.1.7', '3.1.2', '3.1.8', '3.1.9', '3.1.6', '3.1.5', '3.2.3', '3.2.2', '3.2.1', '3.2.4', 'LABORATORIO INFORMATICO', 'AULA DIPARTIMENTALE'],
+    "4": ['LABORATORIO INFORMATICO', '4.0.1', 'LABORATORIO INFORMATICO'],
+    "5": ['BELTRAMI', 'CASTIGLIANO', '5.03', '5.0.1', '5.02', '5.1.1'],
+    "6": ['AULA DIPARTIMENTALE NATTA', '6.0.1'],
+    "7": ['LAB. LDID7', '7.1.1', '7.1.2', '7.1.3', '7.0.1'],
+    "8": ['8.0.1', '8.1.1'],
+    "9": ['9.0.1', '9.0.2', '9.0.4', '9.0.3', '9.1.2'],
+    "11": ['ROGERS', 'GAMMA', 'IV', 'A - ALDO ROSSI', 'C', 'D', 'O.1', 'Z.1', 'III.D', 'E\\F', 'J.1', 'Q.1', 'III.A', 'B', 'III.B', 'Y.1', 'U.1', 'III.C', 'R.1', 'U.2', 'J.2', 'O.2', 'O.2.1', 'R.2', 'Z.2', 'G.1', 'G.2', 'G.3', 'G.4'],
+    "13": ['T.1.2', 'T.1.1', 'T.1.3', 'T.2.1', 'T.2.3', 'T.2.2', 'T.0.4', 'T.0.3', 'T.0.1', 'T.0.2'],
+    "14": ['SALA SEMINARI', 'B.2.2', 'B.2.3', 'B.2.4', 'SALA SEMINARI', 'B.2.1', 'B.3.4', 'B.3.1', 'B.3.3', 'B.3.2', 'B.4.1', 'B.4.3', 'B.4.4', 'B.4.2', 'SALA RIUNIONI', 'B.5.2', 'LABORATORIO INFORMATICO', 'B.5.3', 'B.5.5', 'LABORATORIO INFORMATICO', 'B.5.4', 'B.6.6', 'B.6.1', 'B.64/5', 'B.62/3', 'LABORATORIO INFORMATICO'],
+    "16B": ['16B.1.1', '16B.2.1', '16B.3.1', '16B.0.1'],
+    "16C": ['16C.0.1', '16C.0.3', '16C.0.2'],
+    "19": ['19.0.1 (EX NU.1)'],
+    "20": ['SALA CONF. EMILIO GATTI', '20.S.1'],
+    "21": ['21.0.3', '21.0.2', '21.0.1', 'LABORATORIO INFORMATICO', '21.S.1', 'LABORATORIO INFORMATICO', '21.S.2', '21.S.3', '21.S.4'],
+    "23": ["G.0.2","G.0.1"],
+    "25": ["25.0.1","25.0.2","25.1.5","25.1.6","25.1.3","25.1.2","25.1.1","25.1.4","25.2.3","25.2.1","25.2.2","25.S.2","25.S.1","25.S.3"],
+    "26": ["26.01","26.02","26.04","26.03","26.12","26.16","26.14","26.13","26.11","26.15"],
+    "B1": ["F.LLI CASTIGLIONI"],
+    "B2": ["B2.0.1 - D.I.","2.2","B2.1.2","B2.1.13","B2.1.3","B2.1.14","B2.1.10","B2.1.16","B2.1.9","B2.1.12","B2.1.15","B2.1.11","B2.1.6","B2.1.5","B2.1.8","B2.1.1","B2.2.12","B2.2.7","B2.2.2","B2.2.14","B2.2.1","B2.2.5","B2.2.9","B2.2.8","B2.2.10","B2.2.15","B2.2.4","B2.2.13","B2.2.11","B2.2.6","B2.2.3","B2.3.3","B2.3.1","B2.3.2","B2.3.4"],
+    "B3": ["SALA ROSSA"],
+    "B4": ["AULA PERCETTOLOGIA"],
+    "B6": ["B6.2.1","B6.2.2","B6.2.6","B6.2.5","B6.2.4","B6.2.3","B6.3.1","B6.3.3","B6.3.2"],
+    "B8": ["B8 0.7","B8 0.6","B8 0.4","B8 0.2","B8 0.3","B8 0.5","B8 0.1","B8 2.1","B8 2.3","B8 2.2","B8 1.2","B8 1.1", "B8.0.8", "B8.0.9", "B8.0.10"],
+    "B12": ["L.06","L.05 - D.I.","L.03","L.02","L.01","L.09","L.07","L.08","L.04","L.13","L.15","L.11","L.12","L.14","LABORATORIO INFORMATICO","LABORATORIO INFORMATICO"],
+    "B15": ["LM.3","LM.6","LM.1","LM.5","LM.4"],
+    "B20": ["MEL LAB2","MEL LAB1"],
+    "BL.27": ["BL.27.08","BL.27.07","CORRIDOIO DX P.T. - ED. BL 27","CORRIDOIO SX P.T. - ED. BL 27","ATRIO P.T. - ED. BL.27","BL.27.06","BL.27.05","BL.27.18","BL.27.11","BL.27.14","BL.27.16","BL.27.15","ATRIO 1° PIANO - ED. BL.27","CORRIDOIO SX 1° P. - ED. BL.27","BL.27.17","BL.27.13","BL.27.12","BL.27.04","BL.27.03","CORRIDOIO DX 1° P. - ED. BL.27","BL.27.01","BL.27.02"],
+    "BL.28": ["AULA CARASSA E DADDA","BL.28.1.1","BL.28.1.2","BL.28.2.2","BL.28.2.1"]
 }
 
 let mapOpen = true;
@@ -117,11 +151,11 @@ window.onload = () => {
         })
     })
     $("tr").mouseenter((ev) => {
-        let numbers = buildingRegex.exec($($(ev.target).parent().children()[0]).text());
+        let name = $($(ev.target).parent().children()[0]).text()
+        let building = Object.keys(buildingsRooms).find(a => buildingsRooms[a].includes(name));
         let circle = $(".circle");
-        if (numbers != null) {
-            let number = numbers[0];
-            let position = positions[number];
+        if (building != null) {
+            let position = positions[building];
             if (position != null) {
                 lastPosition = position;
                 adjustCircle();
