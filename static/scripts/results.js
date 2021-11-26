@@ -3,6 +3,8 @@ let buildingRegex = /^./;
 let leoRegex = /^[0-9]+/;
 let bovRegex = /^(BL\.)?[^. ]+((?=\.)|(?= ))/
 let positions = {};
+let sorting = 0;
+let withBuildings = false;
 let positionsLeo = {
     "1": [282 / 1012, 476 / 1012],
     "2": [263 / 1012, 371 / 1012],
@@ -20,7 +22,7 @@ let positionsLeo = {
     "14": [384 / 1012, 264 / 1012],
     "15": [425 / 1012, 311 / 1012],
     "16B": [273 / 1012, 257 / 1012],
-    "16C": [404 / 1012, 306 / 1012],
+    "16C": [390 / 1012, 306 / 1012],
     "19": [558 / 1012, 400 / 1012],
     "20": [662 / 1012, 412 / 1012],
     "21": [776 / 1012, 368 / 1012],
@@ -108,10 +110,111 @@ function adjustCircle() {
     }
 }
 
+function sortAllFromIndex(all, index) {
+    let sorted = all.sort((a, b) => {
+        switch (sorting) {
+            case 1: {
+                return a.from - b.from
+            }
+            case 2: {
+                return a.to - b.to
+            }
+            case 3: {
+                return a.duration - b.duration
+            }
+            case 4: {
+                return b.name.localeCompare(a.name)
+            }
+            case 5: {
+                return b.from - a.from
+            }
+            case 6: {
+                return b.to - a.to
+            }
+            case 7: {
+                return b.duration - a.duration
+            }
+            default: {
+                return a.name.localeCompare(b.name)
+            }
+        }
+    })
+    for (let i = 0 ; i < sorted.length; i++) {
+        sorted[i].el.css("order", index+i+"")
+    }
+    return sorted.length + index;
+}
+
+function sort(order) {
+    if (order != null) {
+        if (sorting % 4 != order) {
+            sorting = order;
+        } else {
+            if (sorting > 3) {
+                sorting -= 4;
+            } else {
+                sorting += 4;
+            }
+        }
+    }
+    let rows = [];
+    let buildings = [];
+    $("#table>tbody>tr").not(".buildings").each((pos, el) => {
+        el = $(el)
+        let fromNumbers = el.find(":nth-child(2)").text().split(":")
+        let toNumbers = el.find(":nth-child(3)").text().split(":")
+        let building = getBuilding(el.find(":nth-child(1)").text());
+        rows.push({
+            pos: 0,
+            el: el,
+            name: el.find(":nth-child(1)").text(),
+            from: parseInt(fromNumbers[0]) * 60 + parseInt(fromNumbers[1]),
+            to: parseInt(toNumbers[0]) * 60 + parseInt(toNumbers[1]),
+            duration: parseFloat(el.find(":nth-child(4)").text()),
+            building: building
+        })
+        if (!buildings.includes(building)) {
+            buildings.push(building);
+        }
+    });
+    
+    if (withBuildings) {
+        let base = 0;
+        buildings = buildings.sort((a, b) => a.localeCompare(b));
+        for (let building of buildings) {
+            if (building == null) {
+                $(".buildings.empty").css("order", base + "");
+            } else {
+                $(".buildings").each((pos, el) => {
+                    if ($(el).text() === building) {
+                        $(el).css("order", base + "");
+                    }
+                })
+            }
+            base = sortAllFromIndex(rows.filter(a => a.building === building), base + 1)
+        }
+    } else {
+        sortAllFromIndex(rows, 0);
+    }
+    let sortingOrder = sorting > 3 ? "sort-up" : "sort-down";
+    for (let i = 0; i < 4; i++) {
+        $($("#table>thead>tr>th")[i])
+            .removeClass("sort-up")
+            .removeClass("sort-down")
+            .addClass(i === sorting % 4 ? sortingOrder : "")
+    }
+    
+}
+
 window.onresize = () => {
     mapOpen = $("#map").is(":visible");
     $("#open").text(onlyMap ? "map close" : (mapOpen ? "map arrow_forward" : "map arrow_back"));
 }
+
+function getBuilding(name) {
+    return Object.keys(buildingsRooms).find(a => buildingsRooms[a].includes(name));
+}
+
 window.onload = () => {
     mapOpen = $("#map").is(":visible");
     $("#title-back").click(() => {
@@ -150,9 +253,32 @@ window.onload = () => {
             }
         })
     })
-    $("tr").mouseenter((ev) => {
+    $("#builds").click(() => {
+        let builds = $("#builds");
+        $("#table>tbody>.buildings").remove();
+        if (builds.hasClass("toggle-on")) {
+            withBuildings = true;
+            builds.removeClass("toggle-on")
+            let buildings = [];
+            $("#table>tbody>tr").each((pos, el) => {
+                let building = getBuilding($(el).find(":nth-child(1)").text());
+                if (!buildings.includes(building)) {
+                    buildings.push(building);
+                }
+            })
+            for (let building of buildings) {
+                $("#table").append($("<tr class='buildings'></tr>").text(building == null ? "Non disponibile" : building).addClass(building == null ? "empty" : ""));
+            }
+            sort();
+        } else {
+            withBuildings = false;
+            sort();
+            builds.addClass("toggle-on")
+        }
+    })
+    $("#table>tbody>tr").mouseenter((ev) => {
         let name = $($(ev.target).parent().children()[0]).text()
-        let building = Object.keys(buildingsRooms).find(a => buildingsRooms[a].includes(name));
+        let building = getBuilding(name);
         let circle = $(".circle");
         if (building != null) {
             let position = positions[building];
@@ -170,8 +296,7 @@ window.onload = () => {
             circle.hide();
             circle.css("opacity", "0");
         }
-    })
-    $("tr").click((ev) => {
+    }).click((ev) => {
         $("#table-container").hide();
         $("#map").show();
         onlyMap = true;
@@ -179,7 +304,7 @@ window.onload = () => {
         $("#open").text(onlyMap ? "map close" : (mapOpen ? "map arrow_forward" : "map arrow_back"));
         
     })
-    
+    sort();
     switch (map) {
         case 1: {
             $("#bov-map").hide();

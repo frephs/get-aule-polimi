@@ -28,9 +28,39 @@ html {
      background: #5582A8;
 }
 
-
+#table>tbody {
+   display: flex;
+   flex-direction: column;
+}
 body {
    height: 100%;
+}
+.buildings {
+   border-bottom: solid 2px lightgray;
+   padding: 5px;
+   font-weight: 700;
+}
+thead {
+   cursor: pointer;
+   user-select: none;
+}
+#table>thead>tr>th {
+   display: flex;
+   flex-direction: row;
+   align-items: center;
+   justify-content: space-between;
+}
+.sort-down:after {
+   font-family: 'Material Icons';
+   font-size: 24px;
+   margin-right: 7px;
+   content: "expand_less";
+}
+.sort-up:after {
+   font-family: 'Material Icons';
+   font-size: 24px;
+   margin-right: 7px;
+   content: "expand_more";
 }
 
 #container {
@@ -45,11 +75,31 @@ body {
 
 #open {
    content: "map close";
+}
+#search-bar>.button {
    font-size: 20px;
    height: 35px;
    margin-left: 10px;
-}
 
+}
+.button {
+   border: solid 2px #5582A8;
+   transition: border 0.2s, background 0.2s, color 0.2s;
+}
+.button.toggle-on {
+   background-color: white;
+   color: #5582A8;
+}
+.button.toggle-on:hover {
+   background-color: #c4ddef;
+   border: solid 2px #5582A8;
+}
+.btn-primary.toggle-on:not(:disabled):not(.disabled):active,
+.button.toggle-on:active {
+   background-color: #b3cfe3;
+   border: solid 2px #5582A8;
+   color: #5582A8;
+}
 .container {
    height: 100%;
    display: flex;

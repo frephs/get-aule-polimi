@@ -35,6 +35,7 @@
     <div id="search-bar">
         <span class="material-icons">search</span>
         <input class="form-control" id="search" autocomplete="off" placeholder="Cerca un'aula">
+        <span id="builds" class="btn btn-primary button material-icons toggle-on">business</span>
         <span id="open" class="btn btn-primary button material-icons">map close</span></div>
     <div id="container">
         <div id="table-container">
@@ -42,10 +43,10 @@
             <table id="table" class="table table-sm table-hover">
                 <thead>
                 <tr>
-                    <th scope="col">Aula</th>
-                    <th scope="col">Libera da</th>
-                    <th scope="col">Libera fino a</th>
-                    <th scope="col">Durata</th>
+                    <th scope="col" onclick="sort(0)">Aula</th>
+                    <th scope="col" onclick="sort(1)">Libera da</th>
+                    <th scope="col" onclick="sort(2)">Fino a</th>
+                    <th scope="col" onclick="sort(3)">Durata</th>
                 </tr>
                 </thead>
                 <tbody>
