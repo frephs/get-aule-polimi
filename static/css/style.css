@@ -1,7 +1,37 @@
 
 html {
    height: 100%;
+   scroll-behavior: smooth;
+
 }
+
+---------------------
+Scrollbar
+---------------------
+**/
+
+/* width */
+::-webkit-scrollbar {
+     width: 10px;
+     height: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+     background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+     border-radius: 10px;
+     background: #C5CAE9;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+     background: #5582A8;
+}
+
 
 body {
    height: 100%;
@@ -46,7 +76,9 @@ body {
    overflow: auto;
    display: flex;
    flex-direction: column;
+   overflow-y: hidden;
 }
+
 #table {
    display: flex;
    flex-direction: column;
@@ -125,19 +157,16 @@ body {
 }
 
 .button {
-   background-color: dodgerblue;
-   border-radius: 5px;
-   padding: 10px 20px;
+   background-color: #5582A8;
    color: white;
    transition: background-color 0.5s;
    cursor: pointer;
-   font-size: 20px;
-   user-select: none;
-   font-weight: 500;
+   border-color: #6690b2
+
 }
 
 .button:hover {
-   background-color: #5baeff;
+   background-color: #3c5c77;
 }
 #search-bar {
    display: flex;
