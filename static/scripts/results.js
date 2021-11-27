@@ -272,6 +272,9 @@ window.onload = () => {
                 $("#map").hide();
             }
         } else {
+            lastPosition = null;
+            lastName = null;
+            adjustCircle();
             $("#table-container").show();
             if (mapOpen) {
                 $("#map").show();
@@ -403,6 +406,13 @@ window.onload = () => {
         }
         sort();
     });
+    $("#table").mouseleave(() => {
+        if (!onlyMap) {
+            lastPosition = null;
+            lastName = null;
+            adjustCircle();
+        }
+    })
     sort();
     switch (map) {
         case 1: {
