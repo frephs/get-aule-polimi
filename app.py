@@ -4,6 +4,7 @@ import datetime
 from main import *
 import requests as r
 import sys
+from flask_sslify import SSLify
 
 app = Flask(__name__)
 
