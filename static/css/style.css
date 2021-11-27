@@ -81,7 +81,7 @@ thead {
 }
 #search-bar>.button {
    font-size: 20px;
-   height: 35px;
+   height: 39px;
    margin-left: 10px;
 
 }
@@ -202,7 +202,24 @@ thead {
    background-color: rgba(255, 255, 255, 0.5);
    border-radius: 30px;
    left: 0;
+   pointer-events: none;
    transition: left 0.5s, top 0.5s, opacity 0.5s;
+   box-sizing: border-box;
+}
+.circle>span {
+   width: 40px;
+   height: 30px;
+   background: white;
+   border: solid #008afa 2px;
+   color: #008afa;
+   font-size: 18px;
+   font-weight: 700;
+   position: absolute;
+   left: 5px;
+   top: 9px;
+   border-radius: 3px;
+   text-align: center;
+   cursor: pointer;
 }
 
 .button {
@@ -224,14 +241,48 @@ thead {
    margin-bottom: 10px;
 }
 #search {
-   margin-left: 10px;
    flex-grow: 1;
    height: 35px;
    padding-left: 10px;
+   border: none;
+}
+#search:focus {
+   box-shadow: none;
 }
 #search-bar:nth-child(1) {
    height: 24px;
    margin-left: 5px;
+}
+#search-rect {
+   padding-right: 5px;
+   margin-left: 10px;
+   border: solid #5582A8 2px;
+   border-radius: 5px;
+   display: flex;
+   align-items: center;
+   flex-basis: 0;
+   flex-grow: 1;
+   flex-direction: row;
+}
+.building-filter {
+   background: #5582A8;
+   color: white;
+   font-size: 15px;
+   padding: 0 10px;
+   height: 25px;
+   border-radius: 3px;
+   margin-right: 3px;
+   user-select: none;
+   cursor: pointer;
+}
+.building-filter:before {
+   font-family: "Material Icons";
+   font-size: 15px;
+   content: "close";
+   margin-right: 5px;
+   position: relative;
+   top: 2px;
+
 }
 .table th {
    border-top: none;

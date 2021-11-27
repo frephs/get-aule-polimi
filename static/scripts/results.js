@@ -100,13 +100,29 @@ let buildingsRooms = {
 let mapOpen = true;
 let onlyMap = false;
 let lastPosition = null;
+let lastName = "";
+let hoverPosition = null;
+let hoverName = "";
+let buildingFilters = [];
 
 function adjustCircle() {
     let circle = $(".circle");
-    if (lastPosition != null) {
+    let position = hoverPosition || lastPosition;;
+    let name = hoverName || lastName;
+    if (position != null) {
         let mapWidth = $("#map-1").width();
-        circle.css("left", mapWidth * lastPosition[0] - 30 + "px");
-        circle.css("top", mapWidth * lastPosition[1] - 30 + "px");
+        circle.css("left", mapWidth * position[0] - 30 + "px");
+        circle.css("top", mapWidth * position[1] - 30 + "px");
+        circle.find("span").text(name);
+        if (!circle.is(":visible")) {
+            circle.show();
+            circle.css("opacity", "1");
+        }
+    } else {
+        if (circle.is(":visible")) {
+            circle.hide();
+            circle.css("opacity", "0");
+        }
     }
 }
 
@@ -182,19 +198,40 @@ function sort(order) {
         let base = 0;
         buildings = buildings.sort((a, b) => a.localeCompare(b));
         for (let building of buildings) {
-            if (building == null) {
-                $(".buildings.empty").css("order", base + "");
+            if ((buildingFilters.length === 0) || (buildingFilters.includes(building))) {
+                if (building == null) {
+                    $(".buildings.empty").css("order", base + "").show();
+                } else {
+                    $(".buildings").each((pos, el) => {
+                        if ($(el).text() === building) {
+                            $(el).show().css("order", base + "");
+                        }
+                    })
+                }
+                rows.filter(a => a.building === building).forEach(a => a.el.show())
+                base = sortAllFromIndex(rows.filter(a => a.building === building), base + 1)
             } else {
-                $(".buildings").each((pos, el) => {
-                    if ($(el).text() === building) {
-                        $(el).css("order", base + "");
-                    }
-                })
+                if (building == null) {
+                    $(".buildings.empty").hide();
+                } else {
+                    $(".buildings").each((pos, el) => {
+                        if ($(el).text() === building) {
+                            $(el).hide();
+                        }
+                    })
+                }
+                rows.filter(a => a.building === building).forEach(a => a.el.hide())
             }
-            base = sortAllFromIndex(rows.filter(a => a.building === building), base + 1)
         }
     } else {
         sortAllFromIndex(rows, 0);
+        rows.forEach(row => {
+            if ((buildingFilters.length === 0) || (buildingFilters.includes(row.building))) {
+                row.el.show();
+            } else {
+                row.el.hide();
+            }
+        })
     }
     let sortingOrder = sorting > 3 ? "sort-up" : "sort-down";
     for (let i = 0; i < 4; i++) {
@@ -213,6 +250,10 @@ window.onresize = () => {
 
 function getBuilding(name) {
     return Object.keys(buildingsRooms).find(a => buildingsRooms[a].includes(name));
+}
+
+function distance(pointA, pointB) {
+    return Math.sqrt((pointA[0] - pointB[0])*(pointA[0] - pointB[0])+(pointA[1] - pointB[1])*(pointA[1] - pointB[1]));
 }
 
 window.onload = () => {
@@ -284,13 +325,12 @@ window.onload = () => {
             let position = positions[building];
             if (position != null) {
                 lastPosition = position;
+                lastName = building;
                 adjustCircle();
-                circle.show();
-                circle.css("opacity", "1");
             } else {
                 lastPosition = null;
-                circle.hide();
-                circle.css("opacity", "0");
+                lastName = null;
+                adjustCircle();
             }
         } else {
             circle.hide();
@@ -304,6 +344,65 @@ window.onload = () => {
         $("#open").text(onlyMap ? "map close" : (mapOpen ? "map arrow_forward" : "map arrow_back"));
         
     })
+    $("#map-1>img").mousemove((ev) => {
+        let el = $(ev.target);
+        let radius =1/26;
+        let x = ev.offsetX / el.width()
+        let y = ev.offsetY / el.width()
+        let pointer = [x, y];
+        let nearest = Object
+            .entries(positions)
+            .map(a => [distance(a[1], pointer), a])
+            .filter(a => a[0] < radius)
+            .sort((a, b) => a[0]-b[0])[0];
+        if (nearest != null) {
+            if ((hoverName !== nearest[1][0]) && (withBuildings)) {
+                hoverName = nearest[1][0];
+                $(".buildings").each((pos, el) => {
+                    if ($(el).text() === hoverName) {
+                        el.scrollIntoView({behavior: "smooth", block: "start", inline: "nearest"});
+                    }
+                })
+            }
+            hoverName = nearest[1][0];
+            hoverPosition = nearest[1][1];
+        } else {
+            hoverPosition = null;
+            hoverName = null;
+        }
+        adjustCircle();
+    }).mouseout(() => {
+        hoverPosition = null;
+        hoverName = null;
+        adjustCircle();
+    }).click(() => {
+        if (hoverName != null) {
+            if (!buildingFilters.includes(hoverName)) {
+                buildingFilters.push(hoverName);
+                $("#search-rect").append(
+                    $("<span class='building-filter'></span>")
+                        .text(hoverName)
+                        .click((ev) => {
+                            let target = $(ev.target);
+                            buildingFilters = buildingFilters.filter(a => a !== target.text());
+                            target.remove();
+                            sort();
+                        }));
+            } else {
+                buildingFilters = buildingFilters.filter(a => a !== hoverName);
+                $(".building-filter").each((pos, el) => {
+                    el = $(el);
+                    if (el.text() === hoverName) {
+                        el.remove();
+                    }
+                })
+            }
+        } else {
+            buildingFilters = [];
+            $(".building-filter").remove();
+        }
+        sort();
+    });
     sort();
     switch (map) {
         case 1: {
