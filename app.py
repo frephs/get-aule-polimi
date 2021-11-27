@@ -3,6 +3,7 @@ from flask import Flask, render_template, request, redirect
 import datetime
 from main import *
 import requests as r
+import sys
 
 app = Flask(__name__)
 app.config['TEMPLATES_AUTO_RELOAD'] = True
@@ -39,4 +40,8 @@ def data():
             return render_template('error.html', e=e)
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", ssl_context='adhoc')
+    if '--secure' in sys.args:
+        app.run(host="0.0.0.0", ssl_context=('certificates/fullchain1.pem', 'privkey1.pem'))
+    else:
+        printf("Running Locally")
+        app.run(host="0.0.0.0")
