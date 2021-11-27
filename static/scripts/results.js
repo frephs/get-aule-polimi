@@ -111,8 +111,8 @@ function adjustCircle() {
     let name = hoverName || lastName;
     if (position != null) {
         let mapWidth = $("#map-1").width();
-        circle.css("left", mapWidth * position[0] - 30 + "px");
-        circle.css("top", mapWidth * position[1] - 30 + "px");
+        circle.css("left", mapWidth * position[0] - 25 + "px");
+        circle.css("top", mapWidth * position[1] - 25 + "px");
         circle.find("span").text(name);
         if (!circle.is(":visible")) {
             circle.show();
@@ -193,7 +193,7 @@ function sort(order) {
             buildings.push(building);
         }
     });
-    
+
     if (withBuildings) {
         let base = 0;
         buildings = buildings.sort((a, b) => a.localeCompare(b));
@@ -240,7 +240,7 @@ function sort(order) {
             .removeClass("sort-down")
             .addClass(i === sorting % 4 ? sortingOrder : "")
     }
-    
+
 }
 
 window.onresize = () => {
@@ -345,7 +345,7 @@ window.onload = () => {
         onlyMap = true;
         adjustCircle();
         $("#open").text(onlyMap ? "map close" : (mapOpen ? "map arrow_forward" : "map arrow_back"));
-        
+
     })
     $("#map-1>img").mousemove((ev) => {
         let el = $(ev.target);
