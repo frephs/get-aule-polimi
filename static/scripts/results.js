@@ -369,11 +369,8 @@ window.onload = () => {
             }
             hoverName = nearest[1][0];
             hoverPosition = nearest[1][1];
-        } else {
-            hoverPosition = null;
-            hoverName = null;
+            adjustCircle();
         }
-        adjustCircle();
     }).mouseout(() => {
         hoverPosition = null;
         hoverName = null;
