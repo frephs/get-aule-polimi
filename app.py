@@ -6,11 +6,10 @@ import requests as r
 import sys
 
 app = Flask(__name__)
-ssl = Flask(__name__)
 
 app.config['TEMPLATES_AUTO_RELOAD'] = True
 
-@app.route("/", methods = ['POST', 'GET'])
+@app.route("/")
 def home():
     return "Hello world"
 
@@ -41,15 +40,11 @@ def data():
         except Exception as e:
             return render_template('error.html', e=e)
 
-@app.before_request
-def before_request():
-    if not request.is_secure and '--secure' in sys.argv:
-        url = request.url.replace('http://', 'https://', 1)
-        code = 301
-        return redirect(url, code=code)
+
 
 if __name__ == "__main__":
     if '--secure' in sys.argv:
+        sslify = SSLify(app)
         app.run(host="0.0.0.0", ssl_context=('certificates/fullchain1.pem', 'certificates/privkey1.pem'))
     else:
         print("Running Locally")
