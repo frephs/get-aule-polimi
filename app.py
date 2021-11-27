@@ -10,7 +10,7 @@ app = Flask(__name__)
 
 app.config['TEMPLATES_AUTO_RELOAD'] = True
 
-@app.route("/")
+@app.route("/", methods = ['GET'])
 def home():
     return "Hello world"
 
