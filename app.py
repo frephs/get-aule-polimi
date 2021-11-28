@@ -4,7 +4,6 @@ import datetime
 from main import *
 import requests as r
 import sys
-from flask_sslify import SSLify
 
 app = Flask(__name__)
 
@@ -45,7 +44,13 @@ def data():
 
 if __name__ == "__main__":
     if '--secure' in sys.argv:
-        sslify = SSLify(app)
+        @app.before_request
+        def before_request():
+            if not request.is_secure:
+                url = request.url.replace('http://', 'https://', 1)
+                code = 301
+                return redirect(url, code=code)
+
         app.run(host="0.0.0.0", ssl_context=('certificates/fullchain1.pem', 'certificates/privkey1.pem'))
     else:
         print("Running Locally")
