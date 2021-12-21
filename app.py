@@ -30,6 +30,7 @@ def data():
         print(form_data)
         ed = request.form.get('edificio')
         strdate = request.form.get('date')
+        now  = datetime.datetime.today()
         date = datetime.datetime.strptime(strdate, '%d/%m/%Y %H:%M')
         threshold = request.form.get('hours')
         map = "0"
@@ -38,7 +39,7 @@ def data():
         elif (ed[:3] == "MIB"):
             map = "2"
         try:
-            return render_template('results.html', advice=getAdvice(ed, date.day, date.month, date.year, float(threshold)), location = map)
+            return render_template('results.html', advice=getAdvice(ed, date.day, date.month, date.year, float(threshold), (now.hour+now.minute/60)), location = map)
         except Exception as e:
             return render_template('error.html', e=e)
 

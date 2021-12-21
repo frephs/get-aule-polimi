@@ -44,12 +44,13 @@ def getMatrixAule(ed, gg, mm, yy):
         matrix.append(row)
     return matrix
 
-def getAdvice(ed,gg, mm, yy, threshold):
+def getAdvice(ed,gg, mm, yy, threshold, hNow):
 
     #Checks whether a room is free for at least "threshold" hours
-    def check(hStart, hFin, threshold, advice):
+    def check(hStart, hFin, threshold, advice, hNow):
         if hFin-hStart >= threshold:
-                    advice.append([str(int(hStart))+':'+f"{int(hFin*60%60):02}", str(int(hFin))+':'+f"{int(hFin*60%60):02}", hFin-hStart])
+                    isFreeNow = (hStart < hNow and hFin >hNow)
+                    advice.append([str(int(hStart))+':'+f"{int(hFin*60%60):02}", str(int(hFin))+':'+f"{int(hFin*60%60):02}", hFin-hStart, isFreeNow])
 
     #Let's get counting
     matrix = getMatrixAule(ed,gg, mm, yy)
@@ -62,10 +63,10 @@ def getAdvice(ed,gg, mm, yy, threshold):
             if not busy :
                 hFin += 0.25
             else:
-                check(hStart, hFin, threshold, advice)
+                check(hStart, hFin, threshold, advice, hNow)
                 hStart = hFin + 0.25
                 hFin = hStart
-        check(hStart, hFin, threshold, advice)
+        check(hStart, hFin, threshold, advice, hNow)
 
         #Adding a room only if it has free hours
         if len(advice) > 1:
@@ -92,11 +93,11 @@ def main():
     print("--------")
     print("TODAY")
     print("---------")
-    printAdvice(getAdvice(building, t.day, t.month, t.year, 3))
+    printAdvice(getAdvice(building, t.day, t.month, t.year, 3, (t.hour+t.minute/60)))
     print("--------")
     print("TOMORROW")
     print("---------")
-    printAdvice(getAdvice(building, t.day+1, t.month, t.year, 3))
+    printAdvice(getAdvice(building, t.day+1, t.month, t.year, 3, (t.hour+t.minute/60)))
 
 if __name__ == "__main__":
     main()
