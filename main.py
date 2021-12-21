@@ -49,7 +49,7 @@ def getAdvice(ed,gg, mm, yy, threshold, hNow):
     #Checks whether a room is free for at least "threshold" hours
     def check(hStart, hFin, threshold, advice, hNow):
         if hFin-hStart >= threshold:
-                    isFreeNow = (hStart < hNow and hFin >hNow) or hNow > 21
+                    isFreeNow = (hStart < hNow and hFin >hNow) or hNow > 21 or hNow <8.15
                     advice.append([str(int(hStart))+':'+f"{int(hFin*60%60):02}", str(int(hFin))+':'+f"{int(hFin*60%60):02}", hFin-hStart, isFreeNow])
 
     #Let's get counting
