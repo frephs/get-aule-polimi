@@ -9,6 +9,18 @@ app = Flask(__name__)
 
 app.config['TEMPLATES_AUTO_RELOAD'] = True
 
+def visitcount():
+	with open("visitors.log", "r+") as f:
+		fileContent = f.read()
+		if fileContent == "":
+			count = 1
+		else:
+			count = int(fileContent) + 1
+		f.seek(0)
+		f.write(str(count))
+		f.truncate()
+		return int(str(count))
+
 @app.route("/", methods = ['GET'])
 def home():
     return "Hello world"
@@ -39,7 +51,7 @@ def data():
         elif (ed[:3] == "MIB"):
             map = "2"
         try:
-            return render_template('results.html', advice=getAdvice(ed, date.day, date.month, date.year, float(threshold), (now.hour+now.minute/60)), location = map)
+            return render_template('results.html', advice=getAdvice(ed, date.day, date.month, date.year, float(threshold), (now.hour+now.minute/60)), location = map, info = [edifici[ed], date.day, date.month, date.year, float(threshold), (now.hour+now.minute/60), visitcount()])
         except Exception as e:
             return render_template('error.html', e=e)
 
