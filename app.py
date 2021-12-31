@@ -58,7 +58,7 @@ def data():
 
 if __name__ == "__main__":
     if '--secure' in sys.argv:
-		app.config['TESTING'] = False;
+		app.config['TESTING'] = False
 		app.config['PREFERRED_URL_SCHEME'] = 'https'
         @app.before_request
         def before_request():
