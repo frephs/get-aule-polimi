@@ -69,4 +69,4 @@ if __name__ == "__main__":
         app.run(host="0.0.0.0", ssl_context=('certificates/fullchain1.pem', 'certificates/privkey1.pem'))
     else:
         print("Running Locally")
-        app.run(host="0.0.0.0")
+        app.run(host="0.0.0.0", port=80)
