@@ -1,5 +1,5 @@
 # GetAulePolimi
-- A simple flask webApp to find free rooms at Polimi
+- Flask webApp to find free rooms at Polimi
 ## Setup
 ```bash
 python -m pip install -r requirements.txt
