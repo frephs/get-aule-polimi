@@ -52,9 +52,9 @@
           <div class="container" id="content">
                <h1>GetAulePolimi</h1>
                <hr>
-               <form action="/aule/results" method="post">
+               <form action="/results" method="post">
                     <div class="form-group col-12 col-md-4">
-                         <label for="edificio">Edificio</label>
+                         <label for="edificio">Campus</label>
                          <select required name='edificio' class="form-control">
                               {% for ed in edifici:%}
                               <option value="{%print(ed)%}" {%if ed==

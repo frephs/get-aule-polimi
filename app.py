@@ -20,17 +20,14 @@ def visitcount():
 		f.truncate()
 		return int(str(count))
 
-@app.route("/", methods = ['GET'])
-def home():
-    return "Hello world"
-
-@app.route("/", methods = ['POST', 'GET'])
+@app.route("/aule", methods = ['POST', 'GET'])
 @app.route("/", methods = ['POST', 'GET'])
 def aule():
     t = datetime.datetime.now()
     datestr = str(t.day)+ "/" + str(t.month)+ "/" + str(t.year)+ " " + str(t.hour) + ":" + ("0" + str(t.minute))[-2:];
     return render_template('index.html', edifici=edifici, date=datestr)
 
+@app.route('/aule/results/', methods = ['POST', 'GET'])
 @app.route('/results/', methods = ['POST', 'GET'])
 @app.route('/results', methods = ['POST', 'GET'])
 def data():
