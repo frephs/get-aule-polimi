@@ -20,8 +20,8 @@ def visitcount():
 		f.truncate()
 		return int(str(count))
 
-@app.route("/aule", methods = ['POST', 'GET'])
 @app.route("/", methods = ['POST', 'GET'])
+@app.route("/aule", methods = ['POST', 'GET'])
 def aule():
     t = datetime.datetime.now()
     datestr = str(t.day)+ "/" + str(t.month)+ "/" + str(t.year)+ " " + str(t.hour) + ":" + ("0" + str(t.minute))[-2:];
