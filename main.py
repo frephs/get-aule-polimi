@@ -50,7 +50,7 @@ def getAdvice(ed,gg, mm, yy, threshold, hNow):
     def check(hStart, hFin, threshold, advice, hNow):
         if hFin-hStart >= threshold:
                     isFreeNow = (hStart < hNow and hFin >hNow) or hNow > 21 or hNow <8.15
-                    advice.append([str(int(hStart))+':'+f"{int(hStart*60%60):02}", str(int(hFin))+':'+f"{int(hFin*60%60):02}", f"{(int(hFin-hStart))}h {(int((hFin-hStart)%1*60))}min", isFreeNow])
+                    advice.append([str(int(hStart))+':'+f"{int(hStart*60%60):02}", str(int(hFin))+':'+f"{int(hFin*60%60):02}", f"{(int(hFin-hStart))}h {(int((hFin-hStart)%1*60))}m", isFreeNow])
 
     #Let's get counting
     matrix = getMatrixAule(ed,gg, mm, yy)
