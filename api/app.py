@@ -25,7 +25,7 @@ def visitcount():
 def aule():
     t = datetime.datetime.now()
     datestr = str(t.day)+ "/" + str(t.month)+ "/" + str(t.year)+ " " + str(t.hour) + ":" + ("0" + str(t.minute))[-2:];
-    return render_template('templates/index.html', edifici=edifici, date=datestr)
+    return render_template('index.html', edifici=edifici, date=datestr)
 
 @app.route('/aule/results/', methods = ['POST', 'GET'])
 @app.route('/results/', methods = ['POST', 'GET'])
@@ -47,9 +47,9 @@ def data():
         elif (ed[:3] == "MIB"):
             map = "2"
         try:
-            return render_template('templates/results.html', advice=getAdvice(ed, date.day, date.month, date.year, float(threshold), (now.hour+now.minute/60)), location = map, info = [edifici[ed], date.day, date.month, date.year, float(threshold), (now.hour+now.minute/60), visitcount()])
+            return render_template('results.html', advice=getAdvice(ed, date.day, date.month, date.year, float(threshold), (now.hour+now.minute/60)), location = map, info = [edifici[ed], date.day, date.month, date.year, float(threshold), (now.hour+now.minute/60), visitcount()])
         except Exception as e:
-            return render_template('templates/error.html', e=e)
+            return render_template('error.html', e=e)
 
 
 
