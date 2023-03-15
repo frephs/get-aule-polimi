@@ -47,7 +47,7 @@ def data():
         elif (ed[:3] == "MIB"):
             map = "2"
         try:
-            return render_template('results.html', advice=getAdvice(ed, date.day, date.month, date.year, float(threshold), (now.hour+now.minute/60)), location = map, info = [edifici[ed], date.day, date.month, date.year, float(threshold), (now.hour+now.minute/60)], 1)
+            return render_template('results.html', advice=getAdvice(ed, date.day, date.month, date.year, float(threshold), (now.hour+now.minute/60)), location = map, info = [edifici[ed], date.day, date.month, date.year, float(threshold), (now.hour+now.minute/60), 1])
         except Exception as e:
             return render_template('error.html', e=e)
 
