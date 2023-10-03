@@ -3,7 +3,7 @@ requests
 Jinja2==3.0.3
 Flask==2.0.2
 MarkupSafe
-Werkzeug
+Werkzeug==2.0.0
 itsdangerous
 click
 pyopenssl
