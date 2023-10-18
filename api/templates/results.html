@@ -71,7 +71,8 @@
                          {%endif%}
                     </td>
                     <script>
-                        document.getElementsByClassName("led").forEach(element => {
+                            let leds = document.getElementsByClassName("led")
+                            leds.forEach(element => {
                             let start = element.parentElement.parentElement.children[1];
                             let end = element.parentElement.parentElement.children[2];
 
