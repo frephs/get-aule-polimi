@@ -120,7 +120,7 @@
     });
 
     function isCurrentTimeInRange(startTime, endTime) {
-        let [inputHours, inputMinutes] = getCurrentFormattedDateTime.split(':').map(Number);
+        let [inputHours, inputMinutes] = getCurrentFormattedDateTime().split(':').map(Number);
         let [startHours, startMinutes] = startTime.split(':').map(Number);
         let [endHours, endMinutes] = endTime.split(':').map(Number);
 
