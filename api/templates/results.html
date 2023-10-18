@@ -108,8 +108,8 @@
 <script>
     let leds = document.getElementsByClassName("led")
     Array.from(leds).forEach(element => {
-        let start = element.parentElement.parentElement.children[1].innerHTML.split(":")[0];
-        let end = element.parentElement.parentElement.children[2].innerHTML.split(":")[0];
+        let start = element.parentElement.parentElement.children[1].innerHTML;
+        let end = element.parentElement.parentElement.children[2].innerHTML;
 
         if (isCurrentTimeInRange(start, end)==true) {
             element.parentElement.innerHTML = "";
@@ -119,9 +119,9 @@
     });
 
     function isCurrentTimeInRange(startTime, endTime) {
-        let inputDate = new Date(`2000-01-01T${getCurrentFormattedDateTime()}:00`);
-        let startDate = new Date(`2000-01-01T${String(startTime%24).padStart(2,'0')}:00:00`);
-        let endDate = new Date(`2000-01-01T${String(endTime%24).padStart(2,'0')}:00:00`);
+        let inputDate = new Date(`2000-01-01T${getCurrentFormattedDateTime()}`);
+        let startDate = new Date(`2000-01-01T${startTime}:00`);
+        let endDate = new Date(`2000-01-01T${endTime}:00`);
         console.log(inputDate, startDate, endDate);
         // Check if input time is between start time and end time
         return inputDate >= startDate && inputDate <= endDate;
@@ -132,8 +132,8 @@
 
         const hours = String(now.getHours()).padStart(2, '0');
         const minutes = String(now.getMinutes()).padStart(2, '0');
-
-        const formattedDateTime = `${hours}:${minutes}`;
+        const seconds = String(now.getSeconds()).padStart(2,'0');
+        const formattedDateTime = `${hours}:${minutes}:${seconds}`;
         return formattedDateTime;
     }
 </script>
