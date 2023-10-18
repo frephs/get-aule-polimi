@@ -108,10 +108,10 @@
 <script>
     let leds = document.getElementsByClassName("led")
     Array.from(leds).forEach(element => {
-        let start = element.parentElement.parentElement.children[1];
-        let end = element.parentElement.parentElement.children[2];
+        let start = element.parentElement.parentElement.children[1].innerHTML;
+        let end = element.parentElement.parentElement.children[2].innerHTML;
 
-        if (!isCurrentTimeInRange(start, end)) {
+        if (isCurrentTimeInRange(start, end)==true) {
             element.parentElement.innerHTML = "";
         }
 
