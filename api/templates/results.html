@@ -66,15 +66,9 @@
                             <td>{% print(x[1]) %}</td>
                             <td>{% print(x[2]) %}</td>
                             <td>
-                                {%if x[3]%}
                                 <img src="{{url_for('static', filename='img/led.gif')}}" class="led" alt="" width="40px"
                                     style="filter: brightness(0.70)">
-                                {%else%}
-                                <img src="{{url_for('static', filename='img/led.gif')}}" class="led" alt=""
-                                    width="40px">
-                                {%endif%}
                             </td>
-
                         </tr>
                         {% endfor %}
                         {% endfor %}
