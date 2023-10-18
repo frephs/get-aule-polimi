@@ -70,7 +70,7 @@
                                 <img src="{{url_for('static', filename='img/led.gif')}}" class="led" alt="" width="40px"
                                     style="filter: brightness(0.70)">
                                 {%else%}
-                                <img src="{{url_for('static', filename='img/led.gif')}}" alt="" width="40px">
+                                <img src="{{url_for('static', filename='img/led.gif')}}" class="led" alt="" width="40px">
                                 {%endif%}
                             </td>
 
@@ -100,38 +100,7 @@
                 <div class="box" style="background-color:#84b3dc">Visitors: {{info[6]}}</div>
             </div>
         </a>
-        <script>
-            let leds = document.getElementsByClassName("led")
-            Array.from(leds).forEach(element => {
-                let start = element.parentElement.parentElement.children[1];
-                let end = element.parentElement.parentElement.children[2];
-
-                if (!isCurrentTimeInRange(start, end)) {
-                    element.parentElement.innerHTML = "";
-                }
-
-
-            });
-
-            function isCurrentTimeInRange(start, end) {
-                const inputDate = new Date(`2000-01-01T${getCurrentFormattedDateTime()}:00`);
-                const startDate = new Date(`2000-01-01T${startTime}:00`);
-                const endDate = new Date(`2000-01-01T${endTime}:00`);
-
-                // Check if input time is between start time and end time
-                return inputDate >= startDate && inputDate <= endDate;
-            }
-
-            function getCurrentFormattedDateTime() {
-                const now = new Date();
-
-                const hours = String(now.getHours()).padStart(2, '0');
-                const minutes = String(now.getMinutes()).padStart(2, '0');
-
-                const formattedDateTime = `${day}/${month}/${year} ${hours}:${minutes}`;
-                return formattedDateTime;
-            }
-        </script>
+        
 
     </div>
 </body>
