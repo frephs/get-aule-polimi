@@ -70,7 +70,8 @@
                                 <img src="{{url_for('static', filename='img/led.gif')}}" class="led" alt="" width="40px"
                                     style="filter: brightness(0.70)">
                                 {%else%}
-                                <img src="{{url_for('static', filename='img/led.gif')}}" class="led" alt="" width="40px">
+                                <img src="{{url_for('static', filename='img/led.gif')}}" class="led" alt=""
+                                    width="40px">
                                 {%endif%}
                             </td>
 
@@ -100,7 +101,7 @@
                 <div class="box" style="background-color:#84b3dc">Visitors: {{info[6]}}</div>
             </div>
         </a>
-        
+
 
     </div>
 </body>
@@ -111,7 +112,7 @@
         let start = element.parentElement.parentElement.children[1].innerHTML;
         let end = element.parentElement.parentElement.children[2].innerHTML;
 
-        if (isCurrentTimeInRange(start, end)==true) {
+        if (isCurrentTimeInRange(start, end) == true) {
             element.parentElement.innerHTML = "";
         }
 
@@ -119,20 +120,32 @@
     });
 
     function isCurrentTimeInRange(startTime, endTime) {
-        let inputDate = new Date(`2000-01-01T${getCurrentFormattedDateTime()}`);
-        let startDate = new Date(`2000-01-01T${String(startTime.split(":")[0]%24).padStart(2,'0')}:${startTime.split(":")[1]}:00`);
-        let endDate = new Date(`2000-01-01T${String(endTime.split(":")[0]%24).padStart(2,'0')}:${endTime.split(":")[1]}:00`);
-        console.log(inputDate, startDate, endDate);
+        let [inputHours, inputMinutes] = inputTime.split(':').map(Number);
+        let [startHours, startMinutes] = startTime.split(':').map(Number);
+        let [endHours, endMinutes] = endTime.split(':').map(Number);
+
+        // Convert times to total minutes for easier comparison
+        let inputTotalMinutes = inputHours * 60 + inputMinutes;
+        let startTotalMinutes = startHours * 60 + startMinutes;
+        let endTotalMinutes = endHours * 60 + endMinutes;
+
         // Check if input time is between start time and end time
-        return inputDate >= startDate && inputDate <= endDate;
+        return inputTotalMinutes >= startTotalMinutes && inputTotalMinutes <= endTotalMinutes;
     }
+    // let inputDate = new Date(`2000-01-01T${getCurrentFormattedDateTime()}`);
+    // let startDate = new Date(`2000-01-01T${String(startTime.split(":")[0] % 24).padStart(2, '0')}:${startTime.split(":")[1]}:00`);
+    // let endDate = new Date(`2000-01-01T${String(endTime.split(":")[0] % 24).padStart(2, '0')}:${endTime.split(":")[1]}:00`);
+    // console.log(inputDate, startDate, endDate);
+    // // Check if input time is between start time and end time
+    // return inputDate >= startDate && inputDate <= endDate;
+    // }
 
     function getCurrentFormattedDateTime() {
         const now = new Date();
 
         const hours = String(now.getHours()).padStart(2, '0');
         const minutes = String(now.getMinutes()).padStart(2, '0');
-        const seconds = String(now.getSeconds()).padStart(2,'0');
+        const seconds = String(now.getSeconds()).padStart(2, '0');
         const formattedDateTime = `${hours}:${minutes}:${seconds}`;
         return formattedDateTime;
     }
