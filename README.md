@@ -6,4 +6,4 @@ python -m pip install -r requirements.txt
 python app.py
 ```
 ## Preview
-[Live Preview here](https://get-aule-polimi.vercel.app/)
+[Live Preview here](https://aule-polimi.vercel.app/)
