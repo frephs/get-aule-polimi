@@ -1,9 +1,10 @@
 bs4
 requests
 Jinja2==3.0.3
-Flask==2.0.2
+# Use a Flask/Werkzeug combination compatible with newer Python versions
+Flask>=2.3.3
 MarkupSafe
-Werkzeug==2.0.0
+Werkzeug>=2.3.7
 itsdangerous
 click
 pyopenssl

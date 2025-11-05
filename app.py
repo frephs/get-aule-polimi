@@ -6,7 +6,10 @@ import requests as r
 import sys
 
 
-app = Flask(__name__)
+"""Create Flask app while pointing to the repository's static and
+template locations (templates are located under `api/static/templates`).
+"""
+app = Flask(__name__, template_folder='api/templates', static_folder='api/static')
 
 app.config['TEMPLATES_AUTO_RELOAD'] = True
 def visitcount():
@@ -67,4 +70,5 @@ if __name__ == "__main__":
         app.run(host="0.0.0.0", ssl_context=('certificates/fullchain1.pem', 'certificates/privkey1.pem'))
     else:
         print("Running Locally")
-        app.run(host="0.0.0.0", port=80) 
+        # Use an unprivileged port for local development to avoid permission errors
+        app.run(host="0.0.0.0", port=5000)
