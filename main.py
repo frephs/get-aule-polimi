@@ -12,7 +12,7 @@ from datetime import date
 from edifici import *
 
 def getUrl(ed,gg, mm, yy):
-    return "https://www7.ceda.polimi.it/spazi/spazi/controller/OccupazioniGiornoEsatto.do?csic="+str(ed)+"&categoria=tutte&tipologia=tutte&giorno_day="+str(gg)+"&giorno_month="+str(mm)+"&giorno_year="+str(yy)+"&jaf_giorno_date_format=dd%2FMM%2Fyyyy&evn_visualizza="
+    return "https://onlineservices.polimi.it/spazi/spazi/controller/OccupazioniGiornoEsatto.do?csic="+str(ed)+"&categoria=tutte&tipologia=tutte&giorno_day="+str(gg)+"&giorno_month="+str(mm)+"&giorno_year="+str(yy)+"&jaf_giorno_date_format=dd%2FMM%2Fyyyy&evn_visualizza="
 
 def getMatrixAule(ed, gg, mm, yy):
     # Returnig the data
